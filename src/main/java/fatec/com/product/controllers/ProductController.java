@@ -2,12 +2,16 @@ package fatec.com.product.controllers;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.BeanRegistry.Spec;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fatec.com.product.models.Product;
+import fatec.com.product.models.SpecialProduct;
 
 @RestController
 @RequestMapping("/products")
@@ -34,10 +38,19 @@ public class ProductController {
             p3.setName("Tablet");
             p3.setPrice(1500.00);
             p3.setDescription("Tablet android 64gb");
+
+            SpecialProduct sp1 = new SpecialProduct();
+            sp1.setId(4L);
+            sp1.setName("TV 60'");
+            sp1.setPrice(4000.00);
+            sp1.setDescription("TV 60' 4K");
+            sp1.setBrand("Samsung");
+            sp1.setModel("QLED");
           
             products.add(p1);
             products.add(p2);   
             products.add(p3);
+            products.add(sp1);
         }
 
         @GetMapping("/{id}")
@@ -54,6 +67,12 @@ public class ProductController {
         @GetMapping
         public ArrayList<Product> getProducts() {
             return products;
+        }
+
+        @PostMapping
+        public Product createProduct(@RequestBody Product product) {
+            products.add(product);
+            return product;
         }
 
 }
